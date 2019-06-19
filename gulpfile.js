@@ -36,13 +36,20 @@ gulp.task("html",function(){
     if(!devMode){
         page.pipe(htmlclean());
     }
-    page.pipe(gulp.dest(folder.dist + "html/"))
+    page.pipe(gulp.dest(folder.dist + "html/"));
+    var page2 =  gulp.src(folder.src + "html/art.html")
+    //自动刷新
+        .pipe(connect.reload());
+    if(!devMode){
+        page2.pipe(htmlclean());
+    }
+    page2.pipe(gulp.dest(folder.dist + "html/"))
 })
 
 gulp.task("images",function(){
-    gulp.src(folder.src + "images/*")
+    gulp.src(folder.src + "img/*")
         // .pipe(imagemin())
-        .pipe(gulp.dest(folder.dist+"images/"))
+        .pipe(gulp.dest(folder.dist+"img/"))
 })
 gulp.task("js",function(){
     var js = gulp.src(folder.src+"js/*")
@@ -68,7 +75,7 @@ gulp.task("css",function(){
 //监听文件变化
 gulp.task("watch",function(){
     gulp.watch(folder.src + "html/*",["html"]);
-    gulp.watch(folder.src + "images/*",["images"]);
+    gulp.watch(folder.src + "img/*",["images"]);
     gulp.watch(folder.src + "js/*",["js"]);
     gulp.watch(folder.src + "css/*",["css"]);
 })
